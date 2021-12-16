@@ -88,45 +88,12 @@ sys.stdout.flush()
 n = len(y)
 n_classes = len(class_names)
 
-print("\n")
-print("---------------------- Decision Tree -------------------------")
-
 total_accuracy = 0.0
 total_precision = [0.0, 0.0, 0.0, 0.0, 0.0]
 total_recall = [0.0, 0.0, 0.0, 0.0, 0.0]
 
 cv = KFold(n_splits=10, shuffle=True, random_state=None)
-"""
-for i, (train_index, test_index) in enumerate(cv.split(X)):
-	X_train, X_test = X[train_index], X[test_index]
-	y_train, y_test = y[train_index], y[test_index]
-	tree = DecisionTreeClassifier(criterion="entropy", max_depth=3)
-	print("Fold {} : Training decision tree classifier over {} points...".format(i, len(y_train)))
-	sys.stdout.flush()
-	tree.fit(X_train, y_train)
-	print("Evaluating classifier over {} points...".format(len(y_test)))
 
-	# predict the labels on the test data
-	y_pred = tree.predict(X_test)
-
-	# show the comparison between the predicted and ground-truth labels
-	conf = confusion_matrix(y_test, y_pred, labels=[0,1,2,3])
-
-	accuracy = np.sum(np.diag(conf)) / float(np.sum(conf))
-	precision = np.nan_to_num(np.diag(conf) / np.sum(conf, axis=1).astype(float))
-	recall = np.nan_to_num(np.diag(conf) / np.sum(conf, axis=0).astype(float))
-
-	total_accuracy += accuracy
-	total_precision += precision
-	total_recall += recall
-    
-print("The average accuracy is {}".format(total_accuracy/10.0))
-print("The average precision is {}".format(total_precision/10.0))    
-print("The average recall is {}".format(total_recall/10.0))  
-
-print("Training decision tree classifier on entire dataset...")
-tree.fit(X, y)
-"""
 print("\n")
 print("---------------------- Random Forest Classifier -------------------------")
 total_accuracy = 0.0
@@ -159,8 +126,6 @@ for i, (train_index, test_index) in enumerate(cv.split(X)):
 print("The average accuracy is {}".format(total_accuracy/10.0))  
 print("The average precision is {}".format(total_precision/10.0))    
 print("The average recall is {}".format(total_recall/10.0))  
-
-# TODO: (optional) train other classifiers and print the average metrics using 10-fold cross-validation
 
 # Set this to the best model you found, trained on all the data:
 best_classifier = RandomForestClassifier(n_estimators=100)
